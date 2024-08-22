@@ -1,4 +1,4 @@
-# Leo Examples - Moov Bootcamp 2024
+# Leo Fundamentals - Moov Bootcamp 2024
 
 This directory contains Leo code examples along with detailed explanations of the three projects completed during the Moov Bootcamp 2024.
 
