@@ -1,0 +1,168 @@
+---
+namespace: ParseExpression
+expectation: Pass
+outputs:
+  - Unary:
+      receiver:
+        Identifier: "{\"id\":\"0\",\"name\":\"x\",\"span\":\"{\\\"lo\\\":0,\\\"hi\\\":1}\"}"
+      op: Abs
+      span:
+        lo: 0
+        hi: 7
+      id: 2
+  - Unary:
+      receiver:
+        Unary:
+          receiver:
+            Unary:
+              receiver:
+                Identifier: "{\"id\":\"0\",\"name\":\"x\",\"span\":\"{\\\"lo\\\":0,\\\"hi\\\":1}\"}"
+              op: Abs
+              span:
+                lo: 0
+                hi: 7
+              id: 2
+          op: Abs
+          span:
+            lo: 0
+            hi: 13
+          id: 4
+      op: Abs
+      span:
+        lo: 0
+        hi: 19
+      id: 6
+  - Unary:
+      receiver:
+        Unary:
+          receiver:
+            Identifier: "{\"id\":\"0\",\"name\":\"x\",\"span\":\"{\\\"lo\\\":1,\\\"hi\\\":2}\"}"
+          op: Abs
+          span:
+            lo: 1
+            hi: 8
+          id: 2
+      op: Negate
+      span:
+        lo: 0
+        hi: 8
+      id: 3
+  - Unary:
+      receiver:
+        Unary:
+          receiver:
+            Identifier: "{\"id\":\"0\",\"name\":\"x\",\"span\":\"{\\\"lo\\\":2,\\\"hi\\\":3}\"}"
+          op: Negate
+          span:
+            lo: 1
+            hi: 3
+          id: 1
+      op: Abs
+      span:
+        lo: 1
+        hi: 10
+      id: 3
+  - Unary:
+      receiver:
+        Unary:
+          receiver:
+            Identifier: "{\"id\":\"0\",\"name\":\"x\",\"span\":\"{\\\"lo\\\":2,\\\"hi\\\":3}\"}"
+          op: Abs
+          span:
+            lo: 2
+            hi: 9
+          id: 2
+      op: Negate
+      span:
+        lo: 0
+        hi: 9
+      id: 3
+  - Unary:
+      receiver:
+        Unary:
+          receiver:
+            Unary:
+              receiver:
+                Identifier: "{\"id\":\"0\",\"name\":\"x\",\"span\":\"{\\\"lo\\\":2,\\\"hi\\\":3}\"}"
+              op: Abs
+              span:
+                lo: 2
+                hi: 9
+              id: 2
+          op: Negate
+          span:
+            lo: 1
+            hi: 9
+          id: 3
+      op: Abs
+      span:
+        lo: 1
+        hi: 16
+      id: 5
+  - Unary:
+      receiver:
+        Unary:
+          receiver:
+            Identifier: "{\"id\":\"0\",\"name\":\"x\",\"span\":\"{\\\"lo\\\":1,\\\"hi\\\":2}\"}"
+          op: Abs
+          span:
+            lo: 1
+            hi: 8
+          id: 2
+      op: Not
+      span:
+        lo: 0
+        hi: 8
+      id: 3
+  - Unary:
+      receiver:
+        Unary:
+          receiver:
+            Identifier: "{\"id\":\"0\",\"name\":\"x\",\"span\":\"{\\\"lo\\\":2,\\\"hi\\\":3}\"}"
+          op: Not
+          span:
+            lo: 1
+            hi: 3
+          id: 1
+      op: Abs
+      span:
+        lo: 1
+        hi: 10
+      id: 3
+  - Unary:
+      receiver:
+        Unary:
+          receiver:
+            Identifier: "{\"id\":\"0\",\"name\":\"x\",\"span\":\"{\\\"lo\\\":2,\\\"hi\\\":3}\"}"
+          op: Abs
+          span:
+            lo: 2
+            hi: 9
+          id: 2
+      op: Not
+      span:
+        lo: 0
+        hi: 9
+      id: 3
+  - Unary:
+      receiver:
+        Unary:
+          receiver:
+            Unary:
+              receiver:
+                Identifier: "{\"id\":\"0\",\"name\":\"x\",\"span\":\"{\\\"lo\\\":2,\\\"hi\\\":3}\"}"
+              op: Abs
+              span:
+                lo: 2
+                hi: 9
+              id: 2
+          op: Not
+          span:
+            lo: 1
+            hi: 9
+          id: 3
+      op: Abs
+      span:
+        lo: 1
+        hi: 16
+      id: 5

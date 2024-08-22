@@ -1,0 +1,92 @@
+[package]
+name = "leo-compiler"
+version = "1.12.0"
+authors = [ "The Aleo Team <hello@aleo.org>" ]
+description = "Compiler for Leo programming language"
+homepage = "https://aleo.org"
+repository = "https://github.com/AleoHQ/leo"
+keywords = [
+  "aleo",
+  "cryptography",
+  "leo",
+  "programming-language",
+  "zero-knowledge"
+]
+categories = [ "compilers", "cryptography", "web-programming" ]
+include = [ "Cargo.toml", "src", "README.md", "LICENSE.md" ]
+license = "GPL-3.0"
+edition = "2021"
+rust-version = "1.69"
+
+[dependencies.leo-ast]
+path = "../ast"
+version = "=1.12.0"
+
+[dependencies.leo-errors]
+path = "../../errors"
+version = "=1.12.0"
+
+[dependencies.leo-passes]
+path = "../passes"
+version = "=1.12.0"
+
+[dependencies.leo-parser]
+path = "../parser"
+version = "=1.12.0"
+
+[dependencies.leo-span]
+path = "../span"
+version = "=1.12.0"
+
+[dependencies.sha2]
+version = "0.10"
+
+[dependencies.snarkvm]
+workspace = true
+
+[dependencies.indexmap]
+version = "1.9"
+features = [ ]
+
+[dev-dependencies.leo-disassembler]
+path = "../../utils/disassembler"
+
+[dev-dependencies.leo-package]
+path = "../../leo/package"
+
+[dev-dependencies.leo-retriever]
+path = "../../utils/retriever"
+
+[dev-dependencies.leo-test-framework]
+path = "../../tests/test-framework"
+
+[dev-dependencies.aleo-std-storage]
+version = "0.1.7"
+default-features = false
+
+[dev-dependencies.dotenvy]
+version = "0.15.7"
+
+[dev-dependencies.rand]
+version = "0.8"
+default-features = false
+
+[dev-dependencies.snarkvm]
+workspace = true
+
+[dev-dependencies.regex]
+version = "1.10.5"
+
+[dev-dependencies.serde]
+version = "1.0.203"
+features = [ "derive" ]
+
+[dev-dependencies.serde_yaml]
+version = "0.8.25"
+
+[dev-dependencies.tempfile]
+version = "3.10"
+
+[features]
+default = [ ]
+ci_skip = [ "leo-ast/ci_skip" ]

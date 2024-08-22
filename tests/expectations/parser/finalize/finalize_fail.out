@@ -1,0 +1,5 @@
+---
+namespace: Parse
+expectation: Fail
+outputs:
+  - "Error [EPAR0370005]: expected 'struct', 'record', 'mapping', '@', 'function', 'transition', 'inline' -- found 'finalize'\n    --> test:6:7\n     |\n   6 |     } finalize {\n     |       ^^^^^^^^"

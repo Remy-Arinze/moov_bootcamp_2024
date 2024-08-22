@@ -1,0 +1,5 @@
+---
+namespace: Compile
+expectation: Fail
+outputs:
+  - "Error [ETYC0372066]: `self.caller` is not a valid operand in an async function call context.\n    --> compiler-test:8:30\n     |\n   8 |         assert_eq(addr, self.caller);\n     |                              ^^^^^^\n"

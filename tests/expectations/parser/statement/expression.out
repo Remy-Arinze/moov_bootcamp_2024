@@ -1,0 +1,42 @@
+---
+namespace: ParseStatement
+expectation: Pass
+outputs:
+  - Expression:
+      expression:
+        Identifier: "{\"id\":\"0\",\"name\":\"expr\",\"span\":\"{\\\"lo\\\":0,\\\"hi\\\":4}\"}"
+      span:
+        lo: 0
+        hi: 5
+      id: 1
+  - Expression:
+      expression:
+        Binary:
+          left:
+            Identifier: "{\"id\":\"0\",\"name\":\"x\",\"span\":\"{\\\"lo\\\":0,\\\"hi\\\":1}\"}"
+          right:
+            Identifier: "{\"id\":\"1\",\"name\":\"y\",\"span\":\"{\\\"lo\\\":2,\\\"hi\\\":3}\"}"
+          op: Add
+          span:
+            lo: 0
+            hi: 3
+          id: 2
+      span:
+        lo: 0
+        hi: 4
+      id: 3
+  - Expression:
+      expression:
+        Call:
+          function:
+            Identifier: "{\"id\":\"0\",\"name\":\"x\",\"span\":\"{\\\"lo\\\":0,\\\"hi\\\":1}\"}"
+          arguments: []
+          program: ~
+          span:
+            lo: 0
+            hi: 3
+          id: 1
+      span:
+        lo: 0
+        hi: 4
+      id: 2

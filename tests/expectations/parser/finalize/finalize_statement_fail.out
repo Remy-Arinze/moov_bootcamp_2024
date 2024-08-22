@@ -1,0 +1,8 @@
+---
+namespace: ParseStatement
+expectation: Fail
+outputs:
+  - "Error [EPAR0370005]: expected ; -- found 'finalize'\n    --> test:1:13\n     |\n   1 | return then finalize;\n     |             ^^^^^^^^"
+  - "Error [EPAR0370005]: expected ; -- found 'finalize'\n    --> test:1:13\n     |\n   1 | return then finalize();\n     |             ^^^^^^^^"
+  - "Error [EPAR0370005]: expected ; -- found 'finalize'\n    --> test:1:13\n     |\n   1 | return then finalize(foo);\n     |             ^^^^^^^^"
+  - "Error [EPAR0370005]: expected ; -- found 'finalize'\n    --> test:1:13\n     |\n   1 | return then finalize(foo, bar);\n     |             ^^^^^^^^"

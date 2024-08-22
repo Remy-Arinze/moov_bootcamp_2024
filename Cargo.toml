@@ -1,0 +1,219 @@
+[package]
+name = "leo-lang"
+version = "1.12.0"
+authors = [ "The Aleo Team <hello@aleo.org>" ]
+description = "The Leo programming language"
+homepage = "https://aleo.org"
+repository = "https://github.com/AleoHQ/leo"
+keywords = [
+  "aleo",
+  "cryptography",
+  "leo",
+  "programming-language",
+  "zero-knowledge"
+]
+categories = [ "compilers", "cryptography", "web-programming" ]
+include = [
+  "Cargo.toml",
+  "leo",
+  "README.md",
+  "LICENSE.md",
+  "examples/lottery/src/main.leo",
+  "examples/lottery/run.sh",
+  "examples/tictactoe/src/main.leo",
+  "examples/tictactoe/run.sh",
+  "examples/token/src/main.leo",
+  "examples/token/run.sh"
+]
+license = "GPL-3.0"
+edition = "2021"
+
+[workspace]
+members = [
+  "compiler/ast",
+  "compiler/compiler",
+  "compiler/parser",
+  "compiler/passes",
+  "compiler/span",
+  "docs/grammar",
+  "errors",
+  "leo/package",
+  "tests/test-framework",
+  "utils/disassembler",
+  "utils/retriever"
+]
+
+[workspace.dependencies.snarkvm]
+#version = "0.16.19"
+git = "https://github.com/AleoNet/snarkVM.git"
+rev = "d170a9f"
+
+[lib]
+path = "leo/lib.rs"
+
+[[bin]]
+name = "leo"
+path = "leo/cli/main.rs"
+
+[features]
+default = [ ]
+ci_skip = [ "leo-compiler/ci_skip" ]
+noconfig = [ ]
+
+[dependencies]
+dialoguer = "0.11.0"
+num-format = "0.4.4"
+text-tables = "0.3.1"
+ureq = "2.9.7"
+
+[dependencies.leo-ast]
+path = "./compiler/ast"
+version = "=1.12.0"
+
+[dependencies.leo-compiler]
+path = "./compiler/compiler"
+version = "=1.12.0"
+
+[dependencies.leo-errors]
+path = "./errors"
+version = "=1.12.0"
+
+[dependencies.leo-package]
+path = "./leo/package"
+version = "=1.12.0"
+
+[dependencies.leo-parser]
+path = "./compiler/parser"
+version = "=1.12.0"
+
+[dependencies.leo-span]
+path = "./compiler/span"
+version = "=1.12.0"
+
+[dependencies.leo-retriever]
+path = "./utils/retriever"
+version = "1.12.0"
+
+[dependencies.aleo-std]
+version = "0.1.24"
+default-features = false
+
+[dependencies.backtrace]
+version = "0.3.73"
+
+[dependencies.clap]
+version = "4.5"
+features = [ "derive", "env", "color", "unstable-styles" ]
+
+[dependencies.color-backtrace]
+version = "0.6.1"
+
+[dependencies.colored]
+version = "2.0"
+
+[dependencies.console]
+version = "0.15.8"
+
+[dependencies.dirs]
+version = "5.0.0"
+
+[dependencies.dotenvy]
+version = "0.15.7"
+
+[dependencies.indexmap]
+version = "1.9"
+features = [ "serde" ]
+
+[dependencies.lazy_static]
+version = "1.5.0"
+
+[dependencies.rand]
+version = "0.8"
+
+[dependencies.rand_chacha]
+version = "0.3.0"
+default-features = false
+
+[dependencies.rand_core]
+version = "0.6.4"
+
+[dependencies.reqwest]
+version = "0.12.5"
+features = [ "blocking", "json", "multipart" ]
+
+[dependencies.self_update]
+version = "0.41.0"
+features = [ "archive-zip" ]
+
+[dependencies.serde]
+version = "1.0"
+features = [ "derive" ]
+
+[dependencies.serde_json]
+version = "1.0"
+
+[dependencies.serial_test]
+version = "3.1.1"
+
+[dependencies.snarkvm]
+workspace = true
+features = [ "circuit", "console" ]
+
+[dependencies.sys-info]
+version = "0.9.1"
+
+[dependencies.toml]
+version = "0.8"
+
+[dependencies.tracing]
+version = "0.1"
+
+[dependencies.tracing-subscriber]
+version = "0.3.18"
+features = [ "fmt" ]
+
+[dependencies.crossterm]
+version = "0.27.0"
+
+[dependencies.rpassword]
+version = "7.3.1"
+
+[target."cfg(windows)".dependencies.ansi_term]
+version = "0.12.1"
+
+[dev-dependencies.assert_cmd]
+version = "2.0.14"
+
+[dev-dependencies.rusty-hook]
+version = "0.11.2"
+
+[dev-dependencies.test_dir]
+version = "0.2.0"
+
+[build-dependencies.walkdir]
+version = "2"
+
+[profile.release]
+opt-level = 3
+lto = "thin"
+incremental = true
+
+[profile.bench]
+opt-level = 3
+debug = false
+rpath = false
+lto = "thin"
+incremental = true
+debug-assertions = false
+
+[profile.dev]
+opt-level = 2
+lto = "thin"
+incremental = true
+
+[profile.test]
+opt-level = 2
+lto = "thin"
+incremental = true
+debug = true
+debug-assertions = true

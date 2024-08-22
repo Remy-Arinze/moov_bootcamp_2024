@@ -1,0 +1,48 @@
+[package]
+name = "leo-errors"
+version = "1.12.0"
+authors = [ "The Aleo Team <hello@aleo.org>" ]
+description = "Errors for the Leo programming language"
+homepage = "https://aleo.org"
+repository = "https://github.com/AleoHQ/leo"
+keywords = [
+  "aleo",
+  "cryptography",
+  "leo",
+  "programming-language",
+  "zero-knowledge"
+]
+categories = [ "compilers", "cryptography", "web-programming" ]
+include = [ "Cargo.toml", "src", "README.md", "LICENSE.md" ]
+license = "GPL-3.0"
+edition = "2021"
+rust-version = "1.69"
+
+[dependencies.leo-span]
+path = "../compiler/span"
+version = "=1.12.0"
+
+[dependencies.anyhow]
+version = "1.0"
+
+[dependencies.backtrace]
+version = "0.3.73"
+
+[dependencies.colored]
+version = "2.0.4"
+
+[dependencies.color-backtrace]
+version = "0.6.1"
+
+[dependencies.derivative]
+version = "2.2.0"
+
+[dependencies.reqwest]
+version = "0.12.5"
+
+[dependencies.serde]
+version = "1.0.203"
+features = [ "derive", "rc" ]
+
+[dependencies.thiserror]
+version = "1.0.61"

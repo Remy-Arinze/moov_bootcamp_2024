@@ -1,0 +1,86 @@
+---
+namespace: ParseStatement
+expectation: Pass
+outputs:
+  - Expression:
+      expression:
+        Call:
+          function:
+            Identifier: "{\"id\":\"0\",\"name\":\"increment\",\"span\":\"{\\\"lo\\\":0,\\\"hi\\\":9}\"}"
+          arguments:
+            - Identifier: "{\"id\":\"1\",\"name\":\"foo\",\"span\":\"{\\\"lo\\\":10,\\\"hi\\\":13}\"}"
+            - Identifier: "{\"id\":\"2\",\"name\":\"bar\",\"span\":\"{\\\"lo\\\":15,\\\"hi\\\":18}\"}"
+            - Identifier: "{\"id\":\"3\",\"name\":\"baz\",\"span\":\"{\\\"lo\\\":20,\\\"hi\\\":23}\"}"
+          program: ~
+          span:
+            lo: 0
+            hi: 24
+          id: 4
+      span:
+        lo: 0
+        hi: 25
+      id: 5
+  - Expression:
+      expression:
+        Call:
+          function:
+            Identifier: "{\"id\":\"0\",\"name\":\"increment\",\"span\":\"{\\\"lo\\\":0,\\\"hi\\\":9}\"}"
+          arguments:
+            - Identifier: "{\"id\":\"1\",\"name\":\"foo\",\"span\":\"{\\\"lo\\\":10,\\\"hi\\\":13}\"}"
+            - Literal:
+                Integer:
+                  - U8
+                  - "2"
+                  - span:
+                      lo: 15
+                      hi: 18
+                  - 2
+            - Literal:
+                Integer:
+                  - U8
+                  - "3"
+                  - span:
+                      lo: 20
+                      hi: 23
+                  - 3
+          program: ~
+          span:
+            lo: 0
+            hi: 24
+          id: 4
+      span:
+        lo: 0
+        hi: 25
+      id: 5
+  - Expression:
+      expression:
+        Call:
+          function:
+            Identifier: "{\"id\":\"0\",\"name\":\"increment\",\"span\":\"{\\\"lo\\\":0,\\\"hi\\\":9}\"}"
+          arguments:
+            - Identifier: "{\"id\":\"1\",\"name\":\"foo\",\"span\":\"{\\\"lo\\\":10,\\\"hi\\\":13}\"}"
+            - Identifier: "{\"id\":\"2\",\"name\":\"bar\",\"span\":\"{\\\"lo\\\":15,\\\"hi\\\":18}\"}"
+          program: ~
+          span:
+            lo: 0
+            hi: 19
+          id: 3
+      span:
+        lo: 0
+        hi: 20
+      id: 4
+  - Expression:
+      expression:
+        Call:
+          function:
+            Identifier: "{\"id\":\"0\",\"name\":\"increment\",\"span\":\"{\\\"lo\\\":0,\\\"hi\\\":9}\"}"
+          arguments: []
+          program: ~
+          span:
+            lo: 0
+            hi: 11
+          id: 1
+      span:
+        lo: 0
+        hi: 12
+      id: 2

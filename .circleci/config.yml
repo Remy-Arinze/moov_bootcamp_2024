@@ -1,0 +1,174 @@
+version: 2.1
+commands:
+  setup_environment:
+    description: "Setup environment"
+    parameters:
+      cache_key:
+        type: string
+        default: leo-stable-linux-cache
+    steps:
+      - run: set -e
+      - setup_remote_docker
+      - run:
+          name: Prepare environment and install dependencies
+          command: |
+            export SCCACHE_CACHE_SIZE=200M
+            export WORK_DIR="$CIRCLE_WORKING_DIRECTORY/.cache/sccache"
+            export SCCACHE_DIR="$CIRCLE_WORKING_DIRECTORY/.cache/sccache"
+            mkdir -p "$CIRCLE_WORKING_DIRECTORY/.bin"
+            wget https://github.com/mozilla/sccache/releases/download/0.2.13/sccache-0.2.13-x86_64-unknown-linux-musl.tar.gz
+            tar -C "$CIRCLE_WORKING_DIRECTORY/.bin" -xvf sccache-0.2.13-x86_64-unknown-linux-musl.tar.gz
+            mv $CIRCLE_WORKING_DIRECTORY/.bin/sccache-0.2.13-x86_64-unknown-linux-musl/sccache $CIRCLE_WORKING_DIRECTORY/.bin/sccache
+            export PATH="$PATH:$CIRCLE_WORKING_DIRECTORY/.bin"
+            export RUSTC_WRAPPER="sccache"
+            rm -rf "$CIRCLE_WORKING_DIRECTORY/.cargo/registry"
+            sudo apt-get update && sudo apt-get install -y clang llvm-dev llvm pkg-config xz-utils make libssl-dev libssl-dev
+      - restore_cache:
+          keys:
+            - << parameters.cache_key >>
+
+  clear_environment:
+    description: "Clear environment"
+    parameters:
+      cache_key:
+        type: string
+        default: leo-stable-linux-cache
+    steps:
+      - run: (sccache -s||true)
+      - run: set +e
+      - save_cache:
+          key: << parameters.cache_key >>
+          paths:
+            - .cache/sccache
+            - .cargo
+
+  install_rust_nightly:
+    description: "Install Rust nightly toolchain"
+    steps:
+      - run: rustup toolchain install nightly-x86_64-unknown-linux-gnu
+
+jobs:
+  check-style:
+    docker:
+      - image: cimg/rust:1.76
+    resource_class: xlarge
+    steps:
+      - checkout
+      - install_rust_nightly
+      - setup_environment:
+          cache_key: leo-fmt-cache
+      - run:
+          name: Check style
+          no_output_timeout: 35m
+          command: cargo +nightly fmt --all -- --check
+      - clear_environment:
+          cache_key: leo-fmt-cache
+
+  clippy:
+    docker:
+      - image: cimg/rust:1.76
+    resource_class: xlarge
+    steps:
+      - checkout
+      - setup_environment:
+          cache_key: leo-clippy-cache
+      - run:
+          name: Clippy
+          no_output_timeout: 35m
+          command: |
+            cargo clippy --workspace --all-targets -- -D warnings
+            cargo clippy --workspace --all-targets --all-features -- -D warnings
+      - clear_environment:
+          cache_key: leo-clippy-cache
+
+  leo-executable:
+    docker:
+      - image: cimg/rust:1.76
+    resource_class: xlarge
+    steps:
+      - checkout
+      - setup_environment:
+          cache_key: leo-executable-cache
+      - run:
+          name: Build and install Leo
+          no_output_timeout: 30m
+          command: cargo install --path . --root . --locked
+      - persist_to_workspace:
+          root: ~/
+          paths:
+            - project/
+      - clear_environment:
+          cache_key: leo-executable-cache
+
+  leo-new:
+    docker:
+      - image: cimg/rust:1.76
+    resource_class: xlarge
+    steps:
+      - attach_workspace:
+          at: /home/circleci/project/
+      - run:
+          name: leo new
+          command: |
+            export LEO=/home/circleci/project/project/bin/leo
+            timeout 30m ./project/.circleci/leo-new.sh
+
+  leo-clean:
+    docker:
+      - image: cimg/rust:1.76
+    resource_class: xlarge
+    steps:
+      - attach_workspace:
+          at: /home/circleci/project/
+      - run:
+          name: leo clean
+          command: |
+            export LEO=/home/circleci/project/project/bin/leo
+            ./project/.circleci/leo-clean.sh
+
+  leo-example:
+    docker:
+      - image: cimg/rust:1.76
+    resource_class: xlarge
+    steps:
+      - attach_workspace:
+          at: /home/circleci/project/
+      - run:
+          name: leo example
+          command: |
+            export LEO=/home/circleci/project/project/bin/leo
+            ./project/.circleci/leo-example.sh
+
+  test-examples:
+    docker:
+      - image: cimg/rust:1.76
+    resource_class: xlarge
+    steps:
+      - attach_workspace:
+          at: /home/circleci/project/
+      - run:
+          name: test examples example
+          command: |
+            export LEO=/home/circleci/project/project/bin/leo
+            export EXAMPLES=/home/circleci/project/project/examples
+            ./project/.circleci/test-examples.sh
+
+workflows:
+  version: 2
+  main-workflow:
+    jobs:
+      - check-style
+      - clippy
+      - leo-executable
+      - leo-new:
+          requires:
+            - leo-executable
+      - leo-clean:
+          requires:
+            - leo-executable
+      - leo-example:
+          requires:
+            - leo-executable
+      - test-examples:
+          requires:
+            - leo-executable

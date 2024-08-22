@@ -1,0 +1,20 @@
+---
+namespace: ParseStatement
+expectation: Pass
+outputs:
+  - Expression:
+      expression:
+        Call:
+          function:
+            Identifier: "{\"id\":\"0\",\"name\":\"finalize\",\"span\":\"{\\\"lo\\\":0,\\\"hi\\\":8}\"}"
+          arguments:
+            - Identifier: "{\"id\":\"1\",\"name\":\"foo\",\"span\":\"{\\\"lo\\\":9,\\\"hi\\\":12}\"}"
+          program: ~
+          span:
+            lo: 0
+            hi: 13
+          id: 2
+      span:
+        lo: 0
+        hi: 14
+      id: 3
